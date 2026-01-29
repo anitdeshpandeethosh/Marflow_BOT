@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Marflow AI Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <img src="marflow.png" class="logo" alt="Marflow Logo" />
+
+    <div class="card">
+      <h1>Marflow AI Assistant</h1>
+      <p class="subtitle">
+        Submit details and talk to our AI assistant
+      </p>
+
+      <form id="leadForm">
+        <input name="name" placeholder="Full Name" required />
+        <input name="email" placeholder="Email Address" required />
+        <input name="company" placeholder="Company Name" required />
+
+        <button type="submit" id="submitBtn" class="primary">
+          Submit
+        </button>
+      </form>
+
+      <div id="afterSubmit" style="display: none">
+        <div class="success">Information Received</div>
+
+        <div class="step">
+          <p id="stepText">Enable microphone</p>
+          <p id="helperText" class="helper"></p>
+
+          <button id="startVapiBtn" class="green">
+            Enable Microphone
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3001";
+const API_BASE = "https://marflow-backend.onrender.com";
 const assistant = "ebea6f63-70c8-407e-9af5-1c0980aefc5a";
 const apiKey = "a1c29cb3-95ce-4cb4-bcad-d90df153576d";
 

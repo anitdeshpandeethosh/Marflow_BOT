@@ -1,149 +1,361 @@
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --success: #10b981;
+  --success-hover: #059669;
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --radius-lg: 24px;
+  --radius-md: 12px;
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  --font-family: 'Outfit', sans-serif;
+}
+
 * {
   box-sizing: border-box;
-  font-family: Inter, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
 }
 
 body {
-  margin: 0;
-  background: #ffffff; /* KEPT WHITE */
-  min-height: 100vh;
+  background: var(--bg-gradient);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-main);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Dynamic Background Elements */
+.bg-gradient {
+  position: fixed;
+  top: -10%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+  z-index: -1;
+  animation: float 20s infinite alternate linear;
+}
+
+.bg-blur {
+  position: fixed;
+  bottom: -10%;
+  left: -10%;
+  width: 70%;
+  height: 70%;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+  z-index: -1;
+  animation: float 25s infinite alternate-reverse linear;
+}
+
+/* Floating Shapes for Premium Feel */
+.shape {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: -1;
+  animation: ripple 15s infinite alternate ease-in-out;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: rgba(37, 99, 235, 0.08);
+  top: 10%;
+  left: 5%;
+}
+
+.shape-2 {
+  width: 500px;
+  height: 500px;
+  background: rgba(16, 185, 129, 0.05);
+  bottom: 10%;
+  right: 5%;
+  animation-delay: -5s;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+
+  100% {
+    transform: scale(1.2) translate(50px, 30px);
+  }
+}
+
+@keyframes float {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  to {
+    transform: translate(100px, 50px) rotate(5deg);
+  }
+}
+
+/* Logo Frame inside Card */
+.logo-frame {
+  width: 120px;
+  height: 68px;
+  background: white;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0 auto 20px;
+  padding: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-/* Logo */
-.logo {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  height: 220px; /* slightly reduced for balance */
+.card-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Container */
+.container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Card */
 .card {
-  background: #ffffff;
-  width: 380px;
-  padding: 28px;
-  border-radius: 16px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  width: 100%;
+  max-width: 440px;
+  padding: 24px 28px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  pointer-events: auto;
 }
 
-/* Headings */
-h1 {
-  margin: 0 0 8px;
-  font-size: 22px;
-  font-weight: 700;
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent);
+  transition: 0.5s;
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-header {
   text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+  color: #0f172a;
 }
 
 .subtitle {
-  margin: 0 0 22px;
-  color: #6b7280;
-  font-size: 14px;
-  text-align: center;
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
-/* Form */
-form {
+/* Form Styles */
+#leadForm {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 20px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-group label {
+  position: absolute;
+  left: 16px;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.input-group label svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  filter: none !important;
 }
 
 input {
-  padding: 13px;
-  border-radius: 10px;
-  border: 1px solid #e5e7eb;
-  font-size: 14px;
-  transition: border 0.2s, box-shadow 0.2s;
+  width: 100%;
+  padding: 12px 14px 12px 48px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(248, 250, 252, 0.8);
+  font-size: 15px;
+  color: var(--text-main);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 input:focus {
   outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
 }
 
-/* Buttons inside card only */
-.card button {
-  padding: 13px;
-  border-radius: 10px;
+/* Button Styles */
+.btn-primary,
+.btn-success {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-md);
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  width: 100%;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-button.primary {
-  background: #2563eb;
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+}
+
+.btn-success {
+  background: var(--success);
   color: white;
 }
 
-button.primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+.btn-success:hover {
+  background: var(--success-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
 }
 
-button.green {
-  background: #16a34a;
-  color: white;
+/* After Submit State */
+.after-submit {
+  text-align: center;
 }
 
-button.green:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.35);
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* Success box */
-.success {
-  margin-top: 16px;
+.success-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: #ecfdf5;
-  border: 1px solid #10b981;
   color: #065f46;
   padding: 12px;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-}
-
-/* Steps */
-.step {
-  margin-top: 18px;
-  text-align: center;
-}
-
-.step p {
-  margin-bottom: 10px;
+  border-radius: var(--radius-md);
   font-size: 14px;
-  color: #374151;
-  text-align: center;
+  font-weight: 500;
+  margin-bottom: 32px;
+  border: 1px solid #10b98133;
 }
 
-.helper {
+.success-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.interaction-step h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.interaction-step .helper {
+  margin-bottom: 24px;
+}
+
+/* Footer */
+.card-footer {
+  margin-top: 16px;
+  text-align: center;
   font-size: 13px;
-  color: #6b7280;
-  margin-bottom: 10px;
-  text-align: center;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
 }
 
-/* Vapi button polish (SAFE) */
-.vapi-widget button {
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+/* Responsive Styles */
+@media (max-width: 480px) {
+  .card {
+    padding: 32px 24px;
+    border-radius: 0;
+    max-width: none;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .container {
+    padding: 0;
+  }
 }
 
-/* Center the Vapi phone button */
+/* Vapi Widget Polish */
 .vapi-btn {
   left: 50% !important;
   right: auto !important;
-  bottom: 40px !important;
   transform: translateX(-50%) !important;
+  bottom: 30px !important;
+  z-index: 999999 !important;
+  pointer-events: auto !important;
 }

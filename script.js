@@ -10,6 +10,17 @@ const startVapiBtn = document.getElementById("startVapiBtn");
 const stepText = document.getElementById("stepText");
 const helperText = document.getElementById("helperText");
 
+// ✅ CONSENT LOGIC (ADD HERE)
+const consentCheckbox = document.getElementById("consentCheckbox");
+
+// Disable submit on load
+submitBtn.disabled = true;
+
+// Enable only when checkbox is checked
+consentCheckbox.addEventListener("change", () => {
+  submitBtn.disabled = !consentCheckbox.checked;
+});
+
 let vapiLoaded = false;
 
 /* FORM SUBMIT */

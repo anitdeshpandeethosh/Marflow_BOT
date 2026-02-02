@@ -1,5 +1,5 @@
 const API_BASE = "https://marflow-backend.onrender.com";
-const assistant = "ebea6f63-70c8-407e-9af5-1c0980aefc5a";
+const assistant = "41f57ad9-0001-4e6e-8fb0-bcc435c71734";
 const apiKey = "a1c29cb3-95ce-4cb4-bcad-d90df153576d";
 
 const form = document.getElementById("leadForm");
@@ -10,18 +10,19 @@ const startVapiBtn = document.getElementById("startVapiBtn");
 const stepText = document.getElementById("stepText");
 const helperText = document.getElementById("helperText");
 
-// ✅ CONSENT LOGIC (ADD HERE)
 const consentCheckbox = document.getElementById("consentCheckbox");
 
 // Disable submit on load
 submitBtn.disabled = true;
 
-// Enable only when checkbox is checked
 consentCheckbox.addEventListener("change", () => {
   submitBtn.disabled = !consentCheckbox.checked;
 });
 
 let vapiLoaded = false;
+
+// 🔑 GLOBAL LEAD CONTEXT (CRITICAL)
+let leadContext = null;
 
 /* FORM SUBMIT */
 form.addEventListener("submit", async (e) => {
@@ -31,6 +32,13 @@ form.addEventListener("submit", async (e) => {
   submitBtn.innerText = "Submitting...";
 
   const payload = Object.fromEntries(new FormData(form).entries());
+
+  // 🔑 STORE CONTEXT FOR VAPI
+  leadContext = {
+    contact_name: payload.name.trim().toUpperCase(),
+    company_name: payload.company.trim().toUpperCase(),
+    email: payload.email.trim().toUpperCase()
+  };
 
   await fetch(`${API_BASE}/api/submit-form`, {
     method: "POST",
@@ -72,6 +80,16 @@ function startVapi() {
   window.vapiSDK.run({
     apiKey,
     assistant,
+
+    // 🔥 THIS IS THE BREAKTHROUGH
+    assistantOverrides: {
+      variableValues: {
+        contact_name: leadContext?.contact_name || "",
+        company_name: leadContext?.company_name || "",
+        email: leadContext?.email || ""
+      }
+    },
+
     config: {
       position: "bottom-right",
       idleText: "Start Call",

@@ -1,4 +1,3 @@
-const API_BASE = "https://marflow-backend.onrender.com";
 const assistant = "41f57ad9-0001-4e6e-8fb0-bcc435c71734";
 const apiKey = "a1c29cb3-95ce-4cb4-bcad-d90df153576d";
 
@@ -21,31 +20,26 @@ consentCheckbox.addEventListener("change", () => {
 
 let vapiLoaded = false;
 
-// 🔑 GLOBAL LEAD CONTEXT (CRITICAL)
+// 🔑 GLOBAL LEAD CONTEXT (USED ONLY FOR VAPI)
 let leadContext = null;
 
-/* FORM SUBMIT */
-form.addEventListener("submit", async (e) => {
+/* FORM SUBMIT — NO API CALL */
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   submitBtn.disabled = true;
-  submitBtn.innerText = "Submitting...";
+  submitBtn.innerText = "Continuing...";
 
   const payload = Object.fromEntries(new FormData(form).entries());
 
-  // 🔑 STORE CONTEXT FOR VAPI
+  // 🔑 STORE CONTEXT FOR VAPI (TRUSTED INPUT)
   leadContext = {
     contact_name: payload.name.trim().toUpperCase(),
     company_name: payload.company.trim().toUpperCase(),
     email: payload.email.trim().toUpperCase()
   };
 
-  await fetch(`${API_BASE}/api/submit-form`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
-
+  // UI TRANSITION ONLY
   form.style.display = "none";
   afterSubmit.style.display = "block";
 });
@@ -81,7 +75,7 @@ function startVapi() {
     apiKey,
     assistant,
 
-    // 🔥 THIS IS THE BREAKTHROUGH
+    // ✅ DYNAMIC VARIABLES (CONTEXT-AWARE CALL)
     assistantOverrides: {
       variableValues: {
         contact_name: leadContext?.contact_name || "",

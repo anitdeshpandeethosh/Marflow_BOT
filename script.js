@@ -1,4 +1,5 @@
-const assistant = "41f57ad9-0001-4e6e-8fb0-bcc435c71734";
+// const assistant = "41f57ad9-0001-4e6e-8fb0-bcc435c71734";
+const assistant = "aa7bab8e-6ac0-445a-b839-0aead836c31e";
 const apiKey = "a1c29cb3-95ce-4cb4-bcad-d90df153576d";
 
 const form = document.getElementById("leadForm");
@@ -20,7 +21,7 @@ consentCheckbox.addEventListener("change", () => {
 
 let vapiLoaded = false;
 
-// 🔑 GLOBAL LEAD CONTEXT (USED ONLY FOR VAPI)
+// 🔑 GLOBAL LEAD CONTEXT (TRUSTED INPUT)
 let leadContext = null;
 
 /* FORM SUBMIT — NO API CALL */
@@ -32,14 +33,14 @@ form.addEventListener("submit", (e) => {
 
   const payload = Object.fromEntries(new FormData(form).entries());
 
-  // 🔑 STORE CONTEXT FOR VAPI (TRUSTED INPUT)
+  // 🔑 STORE CONTEXT FOR VAPI
   leadContext = {
     contact_name: payload.name.trim().toUpperCase(),
     company_name: payload.company.trim().toUpperCase(),
-    email: payload.email.trim().toUpperCase()
+    email: payload.email.trim().toUpperCase(),
+    language: payload.language // 👈 NEW
   };
 
-  // UI TRANSITION ONLY
   form.style.display = "none";
   afterSubmit.style.display = "block";
 });
@@ -75,12 +76,13 @@ function startVapi() {
     apiKey,
     assistant,
 
-    // ✅ DYNAMIC VARIABLES (CONTEXT-AWARE CALL)
+    // ✅ TRUSTED CONTEXT VARIABLES
     assistantOverrides: {
       variableValues: {
-        contact_name: leadContext?.contact_name || "",
-        company_name: leadContext?.company_name || "",
-        email: leadContext?.email || ""
+        contact_name: leadContext.contact_name,
+        company_name: leadContext.company_name,
+        email: leadContext.email,
+        language: leadContext.language // 👈 PASSED TO PROMPT
       }
     },
 

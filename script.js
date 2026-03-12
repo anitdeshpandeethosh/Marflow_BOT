@@ -3,7 +3,7 @@
 // ===============================
 
 // Load key from config.js
-const apiKey = window.VAPI_PUBLIC_KEY;
+const apiKey = "a1c29cb3-95ce-4cb4-bcad-d90df153576d";
 
 // Assistants per language
 const ASSISTANT_BY_LANGUAGE = {
@@ -197,5 +197,6 @@ function resetUI() {
   stepText.innerText = "Ready to talk?";
   helperText.innerText =
     "Enable your microphone to speak with our assistant.";
+
 
 }

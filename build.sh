@@ -14,17 +14,17 @@ os.environ.get("VAPI_PUBLIC_KEY", "")
 )
 
 content = content.replace(
-"**ASSISTANT_EN**",
+"**ASSISTANT_ID_EN**",
 os.environ.get("ASSISTANT_ID_EN", "")
 )
 
 content = content.replace(
-"**ASSISTANT_ES**",
+"**ASSISTANT_ID_ES**",
 os.environ.get("ASSISTANT_ID_ES", "")
 )
 
 content = content.replace(
-"**ASSISTANT_AR**",
+"**ASSISTANT_ID_AR**",
 os.environ.get("ASSISTANT_ID_AR", "")
 )
 

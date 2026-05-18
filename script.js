@@ -1,16 +1,27 @@
 // ===============================
+// 🔐 VAPI CONFIG (loaded from backend)
+// ===============================
+
+// let apiKey = null;
+// let ASSISTANT_BY_LANGUAGE = {};
+
+// // Fetch secrets from backend /config endpoint
+// fetch("/config")
+//   .then((res) => res.json())
+//   .then((data) => {
+//     apiKey = data.vapiPublicKey;
+//     ASSISTANT_BY_LANGUAGE = data.assistants;
+//   })
+//   .catch((err) => console.error("Failed to load config:", err));
+
+// ===============================
 // 🔐 VAPI CONFIG
 // ===============================
 
-// Load key from config.js
-const apiKey = "a1c29cb3-95ce-4cb4-bcad-d90df153576d";
+const apiKey = window.APP_CONFIG.apiKey;
 
-// Assistants per language
-const ASSISTANT_BY_LANGUAGE = {
-  en: "41f57ad9-0001-4e6e-8fb0-bcc435c71734",
-  es: "3ed636eb-3c98-4121-af56-d22aa1998aab",
-  ar: "a009cf2d-51cc-4375-a541-04c409dab573"
-};
+const ASSISTANT_BY_LANGUAGE =
+window.APP_CONFIG.assistants;
 
 // ===============================
 // 📄 DOM ELEMENTS
@@ -106,6 +117,11 @@ startVapiBtn.addEventListener("click", async () => {
 // ===============================
 
 function startVapi() {
+
+  if (!apiKey) {
+    alert("Configuration still loading. Please try again.");
+    return;
+  }
 
   if (vapiLoaded) return;
 

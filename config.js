@@ -1,7 +1,9 @@
-// ===============================
-// 🔐 PUBLIC CONFIG
-// ===============================
+window.APP_CONFIG = {
+apiKey: "**VAPI_PUBLIC_KEY**",
 
-// Vapi public key injected here
-
-window.VAPI_PUBLIC_KEY = ;
+assistants: {
+en: "**ASSISTANT_ID_EN**",
+es: "**ASSISTANT_ID_ES**",
+ar: "**ASSISTANT_ID_AR**"
+}
+};

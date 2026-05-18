@@ -1,13 +1,34 @@
 #!/bin/bash
 
-# Replace VAPI key
+python3 << END
+from pathlib import Path
+import os
 
-sed -i "s|**VAPI_PUBLIC_KEY**|${VAPI_PUBLIC_KEY}|g" config.js
+config_path = Path("config.js")
 
-# Replace assistant IDs
+content = config_path.read_text()
 
-sed -i "s|**ASSISTANT_EN**|${ASSISTANT_ID_EN}|g" config.js
+content = content.replace(
+"**VAPI_PUBLIC_KEY**",
+os.environ.get("VAPI_PUBLIC_KEY", "")
+)
 
-sed -i "s|**ASSISTANT_ES**|${ASSISTANT_ID_ES}|g" config.js
+content = content.replace(
+"**ASSISTANT_EN**",
+os.environ.get("ASSISTANT_ID_EN", "")
+)
 
-sed -i "s|**ASSISTANT_AR**|${ASSISTANT_ID_AR}|g" config.js
+content = content.replace(
+"**ASSISTANT_ES**",
+os.environ.get("ASSISTANT_ID_ES", "")
+)
+
+content = content.replace(
+"**ASSISTANT_AR**",
+os.environ.get("ASSISTANT_ID_AR", "")
+)
+
+config_path.write_text(content)
+
+print("Config injection complete.")
+END
